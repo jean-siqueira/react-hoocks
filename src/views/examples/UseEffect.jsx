@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PageTitle from "../../components/layout/PageTitle";
+import SectionTitle from "../../components/layout/SectionTitle";
 
 function calcFatorial(num) {
   const n = parseInt(num)
@@ -9,6 +10,8 @@ function calcFatorial(num) {
 }
 
 const UseEffect = (props) => {
+
+  //EX #01
   const [number, setNumber] = useState(1);
   const [fatorial, setFatorial] = useState(1);
 
@@ -21,12 +24,19 @@ const UseEffect = (props) => {
 
   useEffect(
     function () {
-        if (fatorial > 100000) {
-            document.title = "Eita!!!"
-        }
-      },
+      if (fatorial > 100000) {
+        document.title = "Eita!!!"
+      }
+    },
     [fatorial]
   );
+
+  //EX #02
+  const [status, setStatus] = useState("Ímpar");
+
+  useEffect(function () {
+    setStatus(number % 2 == 0 ? "Par" : "Ímpar")
+  }, [number])
 
   return (
     <div className="UseEffect">
@@ -34,6 +44,8 @@ const UseEffect = (props) => {
         title="Hook UseEffect"
         subtitle="Permite executar efeitos colaterais em componentes funcionais!"
       />
+      <SectionTitle title="Excercício #01" />
+
       <div className="center">
         <div>
           <span className="text">Fatorial:</span>
@@ -46,6 +58,14 @@ const UseEffect = (props) => {
           value={number}
           onChange={(e) => setNumber(e.target.value)}
         />
+      </div>
+      <SectionTitle title="Excercício #02" />
+      <div className="center">
+        <div>
+          <span className="text">Status: </span>
+          <span className="text red">{status}</span>
+        </div>
+
       </div>
     </div>
   );
