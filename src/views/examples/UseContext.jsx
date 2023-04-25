@@ -1,38 +1,58 @@
-import React, { useContext } from 'react'
-import PageTitle from '../../components/layout/PageTitle'
+import React, { useContext } from "react";
+import PageTitle from "../../components/layout/PageTitle";
 
-import DataContext from '../../data/DataContext'
+import DataContext from "../../data/DataContext";
+import SectionTitle from "../../components/layout/SectionTitle";
+import { AppContext } from "../../data/Store";
 
 const UseContext = (props) => {
+  const { state, setState } = useContext(DataContext);
 
-    const contexto = useContext(DataContext)
+  function addNumber(delta) {
+    setState({
+      ...state,
+      number: state.number + delta,
+    });
+  }
 
-    function addNumber(delta) {
-        contexto.setState({
-            ...contexto.state,
-            number: contexto.state.number + delta
-        })
-    }
+  const { number, text, setNumber } = useContext(AppContext);
 
-    return (
-        <div className="UseContext">
-            <PageTitle
-                title="Hook UseContext"
-                subtitle="Aceita um objeto de contexto e retorna o valor atual do contexto!"
-            />
-            <div className="center">
-                <span className="text">{contexto.state.text}</span>
-                <span className="text">{contexto.state.number}</span>
-            </div>
+  return (
+    <div className="UseContext">
+      <PageTitle
+        title="Hook UseContext"
+        subtitle="Aceita um objeto de contexto e retorna o valor atual do contexto!"
+      />
+      <SectionTitle title="Exercício #01" />
+      <div className="center">
+        <span className="text">{state.text}</span>
+        <span className="text">{state.number}</span>
 
-            <div>
-                <button className="btn" 
-                    onClick={()=> addNumber(-1)}>-1</button>
-                <button className="btn"
-                    onClick={()=> addNumber(+1)}>+1</button>
-            </div>
+        <div>
+          <button className="btn" onClick={() => addNumber(-1)}>
+            -1
+          </button>
+          <button className="btn" onClick={() => addNumber(1)}>
+            +1
+          </button>
         </div>
-    )
-}
+      </div>
 
-export default UseContext
+      <SectionTitle title="Execício #02" />
+      <div className="center">
+        <span className="text">{text}</span>
+        <span className="text">{number}</span>
+        <div>
+          <button className="btn" onClick={() => setNumber(number - 1)}>
+            -1
+          </button>
+          <button className="btn" onClick={() => setNumber(number + 1)}>
+            +1
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default UseContext;
