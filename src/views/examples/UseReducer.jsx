@@ -1,50 +1,78 @@
-import React, { useReducer } from "react";
-import PageTitle from "../../components/layout/PageTitle";
+import React, { useReducer } from 'react'
+import PageTitle from '../../components/layout/PageTitle'
 
-const initialState = {
-  other: null,
-  number: 0,
-};
-
-function reducer(state, action) {
-  switch (action.type) {
-    case "numberAdd2":
-      return { ...state, number: state.number + 2 }
-    case "other":
-      return { ...state, other: action.payload }
-    default:
-      return state;
-  }
-}
+import { initialState, reducer } from '../../store'
+import { numberAdd2, login } from '../../store/actions'
 
 const UseReducer = (props) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+    const [state, dispatch] = useReducer(reducer, initialState)
 
-  return (
-    <div className="UseReducer">
-      <PageTitle
-        title="Hook UseReducer"
-        subtitle="Uma outra forma de ter estado em componentes funcionais!"
-      />
-      <div className="center">
-        {state.other ? (
-          <span className="text">{state.other}</span>
-        ) : (
-          <span className="text">Sem valor</span>
-        )}
+    return (
+        <div className="UseReducer">
+            <PageTitle
+                title="Hook UseReducer"
+                subtitle="Uma outra forma de ter estado em componentes funcionais!"
+            />
 
-        <span className="text">{state.number}</span>
-        <div>
-          <button className="btn" onClick={() => dispatch({ type: "other", payload: 'Jean' })}>
-            Trocar other
-          </button>
-          <button className="btn" onClick={() => dispatch({ type: "numberAdd2" })}>
-            +2
-          </button>
+            <div className="center">
+                {state.user ? (
+                    <span className="text">{state.user.name}</span>
+                ) : (
+                    <span className="text">Sem Usuário</span>
+                )}
+
+                <span className="text">{state.number}</span>
+                <div>
+                    <button
+                        className="btn"
+                        onClick={() => login(dispatch, 'João')}
+                    >
+                        Login
+                    </button>
+                    <button
+                        className="btn"
+                        onClick={() => numberAdd2(dispatch)}
+                    >
+                        +2
+                    </button>
+                    <button
+                        className="btn"
+                        onClick={() => dispatch({ type: 'numberMulti7' })}
+                    >
+                        *7
+                    </button>
+                    <button
+                        className="btn"
+                        onClick={() => dispatch({ type: 'numberDiv25' })}
+                    >
+                        /25
+                    </button>
+                    <button
+                        className="btn"
+                        onClick={() => dispatch({ type: 'numberInt' })}
+                    >
+                        Int
+                    </button>
+                    <button
+                        className="btn"
+                        onClick={() =>
+                            dispatch({ type: 'numberAddN', payload: -9 })
+                        }
+                    >
+                        -9
+                    </button>
+                    <button
+                        className="btn"
+                        onClick={() =>
+                            dispatch({ type: 'numberAddN', payload: 11 })
+                        }
+                    >
+                        +11
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
-};
+    )
+}
 
-export default UseReducer;
+export default UseReducer
